@@ -65,4 +65,160 @@ Pada modul 1 kita telah membuat folder project Laravel dengan nama *penjualan*. 
 
 >Jika migrations berfungsi untuk menjalankan DDL (Data Definition Language), maka database seeder pada Laravel berfungsi untuk menjalankan DML (Data Manipulation Language). Database seeder sangat berguna untuk inisiasi data pada tabel atau beberapa tabel ketika setup aplikasi pertama kali. Bisa juga untuk memperbarui data yang sudah ada atau menghapusnya dari belakang layar [[medium.com](https://medium.com/laravel-web-id/database-seeder-di-laravel-c839c34bfe0#:~:text=Jika%20migrations%20berfungsi%20untuk%20menjalankan,ketika%20setup%20aplikasi%20pertama%20kali.)]
 
-Kalian telah mengetahui apa itu artisan, migration, model, dan seeder. Selanjutnya kita akan membuat database MySql dengan menggunakan artisan, migration, model, dan seeder ini,  pertama buka project dan pilih yang .env dikiri bagian folder, setelah itu kalian cari DB_DATABASE=laravel dan ganti nilai laravel tersebut menjadi penjualan (DB_DATABASE=penjualan), setelah itu pada web browser kalian localhost/phpmyadmin 
+Kalian telah mengetahui apa itu artisan, migration, model, dan seeder. Selanjutnya kita akan membuat database MySql dengan menggunakan artisan, migration, model, dan seeder ini,  pertama buka project dan pilih yang .env dikiri bagian folder, setelah itu kalian cari DB_DATABASE=laravel dan ganti nilai laravel tersebut menjadi penjualan (DB_DATABASE=penjualan), setelah itu pada web browser kalian localhost/phpmyadmin. Setelah itu kalian kembali ke VS Code dan buka terminalnya.
+
+Selanjutnya ketikan code berikut:
+
+```
+php artisan make:migration create_kategori_table
+```
+
+Setelah itu kalain pergi ke database - migrations - lalu ke file yang telah kalian buat (biasanya filenya berada dibawah sendiri), tambahkan string nama pada file, lihat kode berikut:
+
+```
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('kategoritgs', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('kategoritgs');
+    }
+};
+```
+
+Setelah membuat migration kalian ketik ini pada cmd:
+
+```
+php artisan migrate
+```
+
+Setelah di migrate, maka tabel baru akan terbuat dengan nama kategoritgs. Setelah membuat migration, kalian buat seeder baru dengan mengetikan code berikut di cmd atau terminal:
+
+```
+php artisan make:seeder kategoritgsTableSeeder
+```
+
+Setelah mengetikan code tersebut, maka file seeder baru akan terbuat dengan nama kategoritgsTableSeeder, setelah itu kalian ubah codenya seperti ini:
+
+```
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use DB;
+
+class kategoritgsTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        DB::table('kategoritgs')->insert(array(
+            [
+                'nama' => 'Perlangkapan sekolah',
+            ],
+            [
+                'nama' => 'Komputer',
+            ],
+            [
+                'nama' => 'Sabun',
+            ],
+            [
+                'nama' => 'Accesories',
+            ],
+            [
+                'nama' => 'ATK',
+            ]
+        ));
+    }
+}
+```
+
+Kalian ketikan lagi code berikut untuk membuat model:
+
+```
+php artisan make:model Kategoritgs
+```
+
+Setelah model terbuat kalian ketik kode berikut
+
+```
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Kategoritgs extends Model
+{
+    use HasFactory;
+
+    protected $table = 'kategoritgs';
+}
+```
+
+Oh iya, kalian jangan lupa ketikan ini di seeders-DatabaseSeeder agar database bisa diketahui
+
+```
+<?php
+
+namespace Database\Seeders;
+
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class DatabaseSeeder extends Seeder
+{
+    /**
+     * Seed the application's database.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        // \App\Models\User::factory(10)->create();
+
+        // \App\Models\User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
+        $this->call(kategoritgsTableSeeder::class);
+    }
+}
+```
+
+Setelah semuanya selesai kalian ketikan code ini di terminal atau cmd agar databasenya terkirim
+
+```
+php artisan db:seed
+```
