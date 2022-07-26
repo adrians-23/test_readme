@@ -13,11 +13,12 @@
 
 Setelah kalian mengenal apa itu framework dan laravel, selanjutnya kita akan mencoba membuat Database menggunakan framework Laravel. Sebelum itu, pastikan kalian sudah mempunyai Web Browser (Disanrankan Google Chrome), memiliki Text Editor (Disarankan Visual Studio Code), memiliki XAMPP, dan Postman. Jika kalian belum memilikinya kalian bisa download bahan tersebut disini.
 
-|-------------|----------|
-|Google Chrome|[Klik link](https://www.google.com/intl/id_id/chrome/)  
-|VS Code      |[Klik link](https://code.visualstudio.com/)             
-|XAMPP        |[Klik link](https://www.apachefriends.org/download.html)
-|Postman      |[Klik link](https://www.postman.com/downloads/)
+|Nama         |Links                                               |
+|-------------|----------------------------------------------------|
+|Google Chrome|[Klik](https://www.google.com/intl/id_id/chrome/)   |
+|VS Code      |[Klik](https://code.visualstudio.com/)              |
+|XAMPP        |[Klik](https://www.apachefriends.org/download.html) |
+|Postman      |[Klik](https://www.postman.com/downloads/)          |
 
 Setelah kalian mempunyai semua bahan diatas, kita akan mulai pada langkah pertama yaitu membuat projectnya.
 Aktifkan Apache dan MySql di XAMPP, lalu buat folder dengan nama kalian atau folder untuk project tersebut, pada praktek kali ini saya masukkan di D dengan nama folder Praktikum1
